@@ -17,7 +17,9 @@ COPY . ./
 EXPOSE 5000
 
 # Set the working directory for Flask (if Flask files are in a subdirectory)
-WORKDIR /app
+WORKDIR /app/Flask
+
+ENTRYPOINT ["flask", "run", "--host=0.0.0.0", "--port=5000"]
 
 # Run main.py to get data, then start the Flask server
-CMD ["sh", "-c", "python /app/main.py -xgb -odds=fanduel && cd Flask && flask run --host=0.0.0.0 --port=5000"]
+#CMD ["sh", "-c", "python /app/main.py -xgb -odds=fanduel && cd Flask && flask run --host=0.0.0.0 --port=5000"]
