@@ -20,12 +20,14 @@ config = toml.load("config.toml")
 
 con = sqlite3.connect("Data/OddsData.sqlite")
 
+yesterday = datetime.now() - timedelta(days=1)
+
 for key, value in config['get-odds-data'].items():
     date_pointer = datetime.strptime(value['start_date'], "%Y-%m-%d").date()
     end_date = datetime.strptime(value['end_date'], "%Y-%m-%d").date()
     teams_last_played = {}
 
-    while date_pointer <= end_date:
+    while date_pointer <= end_date <= yesterday:
         print("Getting odds data: ", date_pointer)
         sb = Scoreboard(date=date_pointer)
 

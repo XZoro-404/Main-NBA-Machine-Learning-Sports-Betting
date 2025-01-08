@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    develop:
+      watch:
+        - action: sync
+          path: ./Models
+          target: /app/Models # Looks to see if there is any new models

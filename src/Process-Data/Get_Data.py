@@ -1,11 +1,5 @@
-import os
-import random
-import sqlite3
-import sys
-import time
+import os, random, sqlite3, sys, time, toml
 from datetime import datetime, timedelta
-
-import toml
 
 sys.path.insert(1, os.path.join(sys.path[0], '../..'))
 from src.Utils.tools import get_json_data, to_data_frame
@@ -16,11 +10,13 @@ url = config['data_url']
 
 con = sqlite3.connect("../../Data/TeamData.sqlite")
 
+yesterday = datetime.now() - timedelta(days=1)
+
 for key, value in config['get-data'].items():
     date_pointer = datetime.strptime(value['start_date'], "%Y-%m-%d").date()
     end_date = datetime.strptime(value['end_date'], "%Y-%m-%d").date()
 
-    while date_pointer <= end_date:
+    while date_pointer <= end_date <= yesterday:
         print("Getting data: ", date_pointer)
 
         raw_data = get_json_data(
